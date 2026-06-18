@@ -5,7 +5,7 @@ const mode = process.argv[2] ?? 'development';
 const environmentDir = resolve('src/environments');
 const localApiBaseUrl = 'http://localhost:8080/api/v1';
 const productionApiBaseUrl =
-  process.env.API_BASE_URL?.trim() || 'https://your-render-service.onrender.com/api/v1';
+  process.env.API_BASE_URL?.trim() || 'https://summai-g0x2.onrender.com/api/v1';
 
 mkdirSync(environmentDir, { recursive: true });
 
