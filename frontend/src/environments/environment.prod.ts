@@ -1,4 +1,4 @@
 export const environment = {
   "production": true,
-  "apiBaseUrl": "https://your-render-service.onrender.com/api/v1"
+  "apiBaseUrl": "https://summai-g0x2.onrender.com/api/v1"
 } as const;
