@@ -1,0 +1,119 @@
+<main class="page-shell">
+  <section class="hero-panel">
+    <div class="hero-copy">
+      <span class="eyebrow">Alimentado por IA Generativa</span>
+      <h1>Resumos inteligentes de qualquer vídeo</h1>
+      <p>
+        Cole o link de um vídeo do YouTube e obtenha um resumo estruturado em segundos.
+        Sem cadastro, sem complicações.
+      </p>
+
+      <div class="trust-row">
+        <span>Seus dados nunca são armazenados.</span>
+        <span>Processamento seguro e privado.</span>
+      </div>
+
+      <ul class="feature-pills">
+        <li>Resposta em &lt;10s</li>
+        <li>Suporte a 40+ idiomas</li>
+        <li>Exportar como .txt</li>
+        <li>100% Privado</li>
+      </ul>
+    </div>
+
+    <div class="preview-card">
+      <div class="preview-header">
+        <span class="preview-label">Resumo do Vídeo</span>
+        <span class="preview-status" [class.active]="!!summary()">Concluído</span>
+      </div>
+
+      <div class="preview-body" *ngIf="summary(); else placeholderCard">
+        <p class="preview-source">YouTube · Resumido agora</p>
+        <h2>Resumo pronto para copiar ou baixar</h2>
+        <p class="preview-text">
+          O conteúdo foi convertido em tópicos e está disponível abaixo em formato amigável.
+        </p>
+      </div>
+
+      <ng-template #placeholderCard>
+        <div class="preview-placeholder">
+          <div class="placeholder-line large"></div>
+          <div class="placeholder-line"></div>
+          <div class="placeholder-line short"></div>
+          <div class="placeholder-tags">
+            <span>IA</span>
+            <span>Tecnologia</span>
+            <span>Aprendizado</span>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+  <section class="workspace-panel">
+    <form class="summarize-form" [formGroup]="form" (ngSubmit)="submit()">
+      <label class="field-label" for="videoUrl">URL do vídeo no YouTube</label>
+      <div class="input-row">
+        <input
+          id="videoUrl"
+          type="url"
+          formControlName="videoUrl"
+          placeholder="https://www.youtube.com/watch?v=..."
+          [disabled]="isLoading()"
+        />
+        <button type="submit" [disabled]="form.invalid || isLoading()">
+          {{ isLoading() ? 'Processando...' : 'Resumir Vídeo' }}
+        </button>
+      </div>
+
+      <p class="field-hint" *ngIf="videoUrlControl.invalid && videoUrlControl.touched">
+        Informe uma URL válida do YouTube, como `youtube.com/watch?v=...` ou `youtu.be/...`.
+      </p>
+    </form>
+
+    <div class="loading-banner" *ngIf="isLoading()">
+      <span class="spinner" aria-hidden="true"></span>
+      <div>
+        <strong>Processando vídeo</strong>
+        <p>{{ statusMessage() }}</p>
+      </div>
+    </div>
+
+    <div class="error-banner" *ngIf="errorMessage()">
+      <strong>Algo deu errado</strong>
+      <p>{{ errorMessage() }}</p>
+    </div>
+
+    <section class="summary-card" *ngIf="summary()">
+      <div class="summary-header">
+        <div>
+          <span class="summary-kicker">Resumo gerado</span>
+          <h2>Resultado</h2>
+        </div>
+        <div class="summary-actions">
+          <button type="button" class="secondary" (click)="copySummary()">
+            {{ copied() ? 'Copiado' : 'Copiar Texto' }}
+          </button>
+          <button type="button" class="secondary" (click)="downloadSummary()">Baixar (.txt)</button>
+        </div>
+      </div>
+
+      <article class="markdown-body" [innerHTML]="renderedSummary()"></article>
+    </section>
+  </section>
+
+  <section class="benefits-grid">
+    <article>
+      <h3>Fluxo simples</h3>
+      <p>Inserir link, extrair transcrição e gerar um resumo útil sem etapas extras.</p>
+    </article>
+    <article>
+      <h3>Pronto para compartilhar</h3>
+      <p>Copie para a área de transferência ou baixe o conteúdo em arquivo Markdown.</p>
+    </article>
+    <article>
+      <h3>Feito para conversão</h3>
+      <p>Interface direta, com estados claros de sucesso, erro e carregamento.</p>
+    </article>
+  </section>
+</main>
